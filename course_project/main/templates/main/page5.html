@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Perform Quantitative SWOT Analysis</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/main_style.css" %}">
+</head>
+<body>
+<h1>Шаг 5. Оцените степень влияния внутренних факторов на внешние</h1>
+<h4>Подсказка:</h4>
+<p class="intro">— внутренние факторы должны помогать организации реализовывать возможности и преодолевать угрозы, поэтому необходимо оценить
+    текущее влияние внутренних факторов на внешние, чтобы в дальнейшем можно было скорректировать их состояние в целях развития оранизации;</p>
+<p class="intro">— коэффициент влияния определяется по шкале от 0 до 1.0 с шагом 0.1 — чем выше оценка, тем большее влияние внутренний фактор оказывает на внешний;</p>
+<p class="intro">— незаполненные поля приравниваются к нулю.</p>
+<h4>При заполнении полей ориентируйтесь на эти вопросы:</h4>
+<p class="intro">— c какой вероятностью сильная сторона способствует реализации возможности?</p>
+<p class="intro">— c какой вероятностью сильная сторона поможет преодолеть угрозу?</p>
+<p class="intro">— c какой вероятностью слабая сторона мешает реализации возможности?</p>
+<p class="intro">— c какой вероятностью слабая сторона способствует воплощению угрозы в реальность?</p>
+{% load custom_tags %}
+<form method="post" action="/page5_output/">
+    {% csrf_token %}
+    <table id="final_matrix">
+        <tr>
+            <td rowspan="2" colspan="2" class="header">Внутренние факторы</td>
+            <td colspan="{{ ot_weights_len|add:ot_weights_len }}" class="header">Внешние факторы</td>
+        </tr>
+        <tr>
+            <td colspan="{{ ot_weights_len }}" class="header">Возможности</td>
+            <td colspan="{{ ot_weights_len }}" class="header">Угрозы</td>
+        </tr>
+        <tr>
+            <td rowspan="2">Характеристика</td>
+            <td rowspan="2">Оценка с учетом синергии</td>
+            {% for o in o_weights %}
+                <td colspan="2">{{ o }}</td>
+            {% endfor %}
+            {% for t in t_weights %}
+                <td colspan="2">{{ t }}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for o in o_weights %}
+                <td>Влияние</td>
+                <td>Произведение</td>
+            {% endfor %}
+            {% for t in t_weights %}
+                <td>Влияние</td>
+                <td>Произведение</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td colspan="{{ 2|add:ot_weights_len|add:ot_weights_len }}" class="empty">Сильные стороны</td>
+        </tr>
+        {% for s in s_weights %}
+            <tr>
+                <td>{{ s }}</td>
+                <td>{{ s_eval|list_index:forloop.counter0 }}</td>
+                {% for o in o_weights %}
+                    <td><input type="select" size="1" list="weights" name="Oinf{{ forloop.counter }}"></td>
+                    <td class="empty"></td>
+                {% endfor %}
+                {% for t in t_weights %}
+                    <td><input type="select" size="1" list="weights" name="Tinf{{ forloop.counter }}"></td>
+                    <td class="empty"></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="{{ 2|add:ot_weights_len|add:ot_weights_len }}" class="empty">Слабые стороны</td>
+        </tr>
+        {% for w in w_weights %}
+            <tr>
+                <td>{{ w }}</td>
+                <td>{{ w_eval|list_index:forloop.counter0 }}</td>
+                {% for o in o_weights %}
+                    <td><input type="select" size="1" list="weights" name="Oinf{{ forloop.counter }}"></td>
+                    <td class="empty"></td>
+                {% endfor %}
+                {% for t in t_weights %}
+                    <td><input type="select" size="1" list="weights" name="Tinf{{ forloop.counter }}"></td>
+                    <td class="empty"></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+       <tr>
+           <td colspan="2" class="empty">Оценка значимости внешнего фактора с учетом вероятности</td>
+           {% for pos in pos_eval %}
+                <td class="empty"></td>
+                <td class="empty">{{ pos }}</td>
+           {% endfor %}
+       </tr>
+    </table>
+    <div>
+        <input class="submit_btn" name="finish" type="submit" value="ПОСЧИТАТЬ">
+        <input class="submit_btn" name="reset" type="reset" value="СБРОСИТЬ ВСЕ">
+    </div>
+    <datalist id="weights">
+        <option value="0">0</option>
+        <option value="0.1">0.1</option>
+        <option value="0.2">0.2</option>
+        <option value="0.3">0.3</option>
+        <option value="0.4">0.4</option>
+        <option value="0.5">0.5</option>
+        <option value="0.6">0.6</option>
+        <option value="0.7">0.7</option>
+        <option value="0.8">0.8</option>
+        <option value="0.9">0.9</option>
+        <option value="1">1</option>
+    </datalist>
+</form>
+</body>
+</html>

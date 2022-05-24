@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Perform Quantitative SWOT Analysis</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/input_form.css" %}">
+</head>
+<body>
+<h1>Шаг 1. Оцените важность каждого фактора</h1>
+<h4>Подсказка:</h4>
+<p class="intro">— внутренние факторы (сильные и слабые стороны) оцениваются с точки зрения влияния на состояние организации, ее потенциал;</p>
+<p class="intro">— внешние факторы (возможности и угрозы) оцениваются с точки зрения позитивного или негативного влияния на организацию;</p>
+<p class="intro">— сильные стороны и возможности должны быть оценены положительно, слабые стороны и угрозы — отрицательно, а нулевое значение могут иметь нейтральные факторы;</p>
+<p class="intro">— пожалуйста, вводите равное количество факторов: по два, по три, по четыре или по пять в каждой категории, — в противном случае вычисления не осуществимы.</p>
+{% if messages %}
+    {% for message in messages %}
+        <p class="messages">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+<form method="post" action="/page2/">
+    {% csrf_token %}
+    <table id="input_matrix">
+        <tr class="matrix_row">
+            <td class="input_matrix_quater">
+                <fieldset class="field_content">
+                    <legend>СИЛЬНЫЕ СТОРОНЫ</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <input class="I" name="S_1" type="text" placeholder="Введите фактор">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RS_1"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="S_2" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RS_2"
+                                       type="range">
+                                <p class="ticks">
+                                    <span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="S_3" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RS_3"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="S_4" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RS_4"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="S_5" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RS_5"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </td>
+        </tr>
+        <tr class="matrix_row">
+            <td class="input_matrix_quater">
+                <fieldset class="field_content">
+                    <legend>СЛАБЫЕ СТОРОНЫ</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <input class="I" name="W_1" type="text" placeholder="Введите фактор">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RW_1"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="W_2" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RW_2"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="W_3" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RW_3"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="W_4" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RW_4"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="W_5" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RW_5"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </td>
+        </tr>
+        <tr class="matrix_row">
+            <td class="input_matrix_quater">
+                <fieldset class="field_content">
+                    <legend>ВОЗМОЖНОСТИ</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <input class="I" name="O_1" type="text" placeholder="Введите фактор">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RO_1"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="O_2" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RO_2"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="O_3" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RO_3"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="O_4" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RO_4"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="O_5" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RO_5"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </td>
+        </tr>
+        <tr class="matrix_row">
+            <td class="input_matrix_quater">
+                <fieldset class="field_content">
+                    <legend>УГРОЗЫ</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <input class="I" name="T_1" type="text" placeholder="Введите фактор">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RT_1"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="T_2" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RT_2"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="T_3" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RT_3"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="T_4" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RT_4"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="I" name="T_5" type="text">
+                            </td>
+                            <td>
+                                <input class="R" list="weights" max="3" min="-3" name="RT_5"
+                                       type="range">
+                                <p class="ticks"><span>-3</span><span>0</span><span>3</span></p>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <p><input class="submit_btn" name="finish" type="submit" value="ДАЛЕЕ">
+        <input class="submit_btn" name="reset" type="reset" value="СБРОСИТЬ ВСЕ"></p>
+    </div>
+</form>
+<datalist id="weights" class="sliderticks">
+    <option value="-3">
+    <option value="-2">
+    <option value="-1">
+    <option value="0">
+    <option value="1">
+    <option value="2">
+    <option value="3">
+</datalist>
+</body>
+</html>

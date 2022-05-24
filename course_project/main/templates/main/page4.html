@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Perform Quantitative SWOT Analysis</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/main_style.css" %}">
+</head>
+<body>
+<h1>Шаг 4. Оцените вероятность наличия возможностей и угроз в стратегической перспективе</h1>
+<h4>Подсказка:</h4>
+<p class="intro">— наличие угроз и возможностей в будущем не гарантировано, а только вероятно, поэтому возникает необходимость
+    оценки вероятностей наличия выявленных возможностей и угроз в стратегической перспективе;</p>
+<p class="intro">— коэффициент вероятности определяется по шкале от 0 до 1.0 с шагом 0.1 — чем выше вероятность возникновения фактора, тем выше оценка;</p>
+<p class="intro">— незаполненные поля приравниваются к нулю.</p>
+{% load custom_tags %}
+<form method="post" action="/page4_output/">
+    {% csrf_token %}
+    <table id="synergy_matrix">
+        <tr>
+            <td class="header">Характеристика фактора</td>
+            <td class="header">Оценка значимости фактора с учетом синергии</td>
+            <td class="header">Вероятность наличия фактора в стратегической перспективе</td>
+        </tr>
+        {% for key in weights %}
+            <tr>
+                <td class="factor">{{ key }}</td>
+                <td>{{ sums|list_index:forloop.counter0 }}</td>
+                <td><input type="select" size="1" list="weights" name="pos"></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div>
+        <input class="submit_btn" name="finish" type="submit" value="ПОСЧИТАТЬ">
+        <input class="submit_btn" name="reset" type="reset" value="СБРОСИТЬ ВСЕ">
+    </div>
+    <datalist id="weights">
+        <option value="0">0</option>
+        <option value="0.1">0.1</option>
+        <option value="0.2">0.2</option>
+        <option value="0.3">0.3</option>
+        <option value="0.4">0.4</option>
+        <option value="0.5">0.5</option>
+        <option value="0.6">0.6</option>
+        <option value="0.7">0.7</option>
+        <option value="0.8">0.8</option>
+        <option value="0.9">0.9</option>
+        <option value="1">1</option>
+    </datalist>
+</form>
+</body>
+</html>

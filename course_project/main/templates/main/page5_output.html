@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Perform Quantitative SWOT Analysis</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/main_style.css" %}">
+</head>
+<body>
+<h1>Шаг 5. Оцените степень влияния внутренних факторов на внешние</h1>
+<h4>Подсказка:</h4>
+<p class="intro">— внутренние факторы должны помогать организации реализовывать возможности и преодолевать угрозы,
+    поэтому необходимо оценить
+    текущее влияние внутренних факторов на внешние, чтобы в дальнейшем можно было скорректировать их состояние в целях
+    развития оранизации;</p>
+<p class="intro">— коэффициент влияния определяется по шкале от 0 до 1.0 с шагом 0.1 — чем выше оценка, тем большее
+    влияние внутренний фактор оказывает на внешний;</p>
+{% load custom_tags %}
+<table id="final_matrix">
+    <tr>
+        <td rowspan="2" colspan="2" class="header">Внутренние факторы</td>
+        <td colspan="{{ ot_weights_len|add:ot_weights_len }}" class="header">Внешние факторы</td>
+    </tr>
+    <tr>
+        <td colspan="{{ ot_weights_len }}" class="header">Возможности</td>
+        <td colspan="{{ ot_weights_len }}" class="header">Угрозы</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Характеристика</td>
+        <td rowspan="2">Оценка с учетом синергии</td>
+        {% for o in o_weights %}
+            <td colspan="2">{{ o }}</td>
+        {% endfor %}
+        {% for t in t_weights %}
+            <td colspan="2">{{ t }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for o in o_weights %}
+            <td>Влияние</td>
+            <td>Произведение</td>
+        {% endfor %}
+        {% for t in t_weights %}
+            <td>Влияние</td>
+            <td>Произведение</td>
+        {% endfor %}
+    <tr>
+        <td colspan="{{ 2|add:ot_weights_len|add:ot_weights_len }}" class="empty">Сильные стороны</td>
+    </tr>
+    {% for key in weights %}
+        {% if s_weights_len == forloop.counter0 %}
+            <tr>
+        <td colspan="{{ 2|add:ot_weights_len|add:ot_weights_len }}" class="empty">Слабые стороны</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ sw_sums|list_index:forloop.counter0 }}</td>
+            {% for i in weights %}
+                <td>{{ inf|list_index:forloop.counter0|list_index:forloop.parentloop.counter0 }}</td>
+                <td class="empty">{{ sums_inf|list_index:forloop.counter0|list_index:forloop.parentloop.counter0 }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="2" class="empty">Оценка значимости внешнего фактора под влиянием внутренних факторов</td>
+        {% for sum in final_sums %}
+            <td></td>
+            <td class="empty">{{ sum }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td colspan="2" class="empty">Оценка значимости внешнего фактора с учетом вероятности</td>
+        {% for pos in pos_eval %}
+            <td></td>
+            <td class="empty">{{ pos }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td colspan="2" class="empty">Итоговая оценка</td>
+        {% for k in final_eval %}
+            <td class="empty"></td>
+            <td class="empty">{{ k }}</td>
+        {% endfor %}
+    </tr>
+</table>
+<h4>Из полученных результатов можно сделать следующий вывод:</h4>
+<p class="intro">— Фактор <span class="bold">{{ max_o }}</span> в текущих условиях можно реализовать в полной мере,
+    стоит придерживаться этой тактики для успешного достижения цели;</p>
+<p class="intro">— Реализовать потенциал фактора <span class="bold">{{ min_o }}</span> в текущих условиях
+    практически не удается, необходимо поработать над слабыми сторонами,
+    либо отказаться от использования этой возможности;</p>
+<p class="intro">— Фактор <span class="bold">{{ max_t }}</span> не является проблемой и легко может быть компенсирован за счет сильных сторон;</p>
+<p class="intro">— Фактор <span class="bold">{{ min_t }}</span>, наоборот, является основной уязвимостью, сильные стороны
+    не способны преодолеть эту угрозу, нужно поработать над сильными и слабыми сторонами;</p>
+<p class="outro_thanks">Спасибо, что воспользовались нашим приложением!</p>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Perform Quantitative SWOT Analysis</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/main_style.css" %}">
+</head>
+<body>
+<h1>Шаг 3. Оцените степень влияния возможностей и угроз сторон друг на друга</h1>
+<h4>Подсказка:</h4>
+<p class="intro">— фактор, представляющий возможность, под влиянием угрозы может трансформироваться в угрозу,
+    а под влиянием другой возможности может поднять свою значимость,
+    поэтому данные на этапе Шага 1 оценки возможностей и угроз необходимо скорректировать с учетом их синергизма;</p>
+<p class="intro">— шкала оценки синергизма имеет диапазон от +3 до -3 с шагом оценки 0.5;</p>
+<p class="intro">— положительные оценки показывают благоприятное воздействие одного фактора на другой, отрицательные оценки — негативное;</p>
+<p class="intro">— крайние значения отражают кардинальное изменение действия фактора;</p>
+<p class="intro">— незаполненные поля приравниваются к нулю;</p>
+<p class="intro">— данный этап можно пропустить.</p>
+<form method="post" action="/page3_output/">
+    {% csrf_token %}
+    <table id="synergy_matrix">
+        <tr>
+            <td rowspan="2" class="header">Факторы, оказывающие влияние</td>
+            <td colspan="{{ ot_weights_len }}" class="header">Факторы, на которые оказывается влияние</td>
+        </tr>
+        <tr>
+            {% for o in o_weights %}
+                <td class="factor">{{ o }}</td>
+            {% endfor %}
+            {% for t in t_weights %}
+                <td class="factor">{{ t }}</td>
+            {% endfor %}
+        </tr>
+        {% for o in o_weights %}
+            <tr>
+                <td class="factor">{{ o }}</td>
+                {% for key in o_weights %}
+                    {% if key == o %}
+                        <td class="empty"></td>
+                    {% else %}
+                        <td><input type="select" size="1" list="weights" name="Ovals{{ forloop.counter }}"></td>
+                    {% endif %}
+                {% endfor %}
+                {% for key in t_weights %}
+                    <td><input type="select" size="1" list="weights" name="Tvals{{ forloop.counter }}"></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        {% for t in t_weights %}
+            <tr>
+                <td class="factor">{{ t }}</td>
+                {% for key in o_weights %}
+                    <td><input type="select" size="1" list="weights" name="Ovals{{ forloop.counter }}"></td>
+                {% endfor %}
+                {% for key in t_weights %}
+                    {% if key == t %}
+                        <td class="empty"></td>
+                    {% else %}
+                        <td><input type="select" size="1" list="weights" name="Tvals{{ forloop.counter }}"></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <div>
+        <input class="submit_btn" name="finish" type="submit" value="ПОСЧИТАТЬ">
+        <input class="submit_btn" name="skip" type="submit" value="ПРОПУСТИТЬ">
+        <input class="submit_btn" name="reset" type="reset" value="СБРОСИТЬ ВСЕ">
+    </div>
+    <datalist id="weights">
+        <option value="-3">-3</option>
+        <option value="-2.5">-2.5</option>
+        <option value="-2">-2</option>
+        <option value="-1.5">-1.5</option>
+        <option value="-1">-1</option>
+        <option value="-0.5">-0.5</option>
+        <option value="0">0</option>
+        <option value="0.5">0.5</option>
+        <option value="1">1</option>
+        <option value="1.5">1.5</option>
+        <option value="2">2</option>
+        <option value="2.5">2.5</option>
+        <option value="3">3</option>
+    </datalist>
+</form>
+</body>
+</html>

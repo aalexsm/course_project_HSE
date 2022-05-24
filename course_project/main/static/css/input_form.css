@@ -1,0 +1,153 @@
+body {
+    width: 100%;
+    height: 50%;
+    padding: 0;
+    margin: 0;
+    background: rgb(231, 236, 238);
+}
+
+h1 {
+    text-align: center;
+    color: rgb(48, 59, 64);
+    font-family: Verdana;
+}
+
+h4, .intro {
+    color: rgb(48, 59, 64);
+    font-family: Verdana;
+    margin-left: 40px;
+}
+
+.messages {
+    font-family: Verdana;
+    font-weight: bold;
+    color: red;
+    margin-left: 5%;
+    width: 90%;
+}
+
+div {
+    display: table-cell;
+    position: absolute;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    color: rgb(48, 59, 64);
+}
+
+table {
+    width: 100%;
+    padding-right: 30px;
+    padding-left: 30px;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+table td {
+    padding-top: 30px;
+}
+
+table td:first-child {
+    padding-right: 15px;
+}
+
+.field_content table {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.field_content table td:first-child{
+    width: 75%;
+    position: relative;
+    padding-right: 40px;
+}
+
+.field_content table td{
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+.field_content .I {
+    width: 100%;
+    border-radius: 1px;
+    margin-right: 15px;
+    padding: 5px;
+    border: 0;
+    border-bottom: 3px solid white;
+    outline: 0;
+    font-size: 1.3rem;
+    color: white;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+::placeholder {
+    color: gray;
+    font-size: 1.3rem;
+    cursor: text;
+}
+
+.field_content .I:focus{
+    padding-bottom: 6px;
+    border-width: 4px;
+    border-image: linear-gradient(to right, rgb(93, 134, 146),rgb(48, 59, 64));
+    border-image-slice: 1;
+}
+
+.field_content .R{
+    width: 100%;
+}
+
+.ticks{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: rgb(48, 59, 64);
+    font-weight: normal;
+    font-size: 15px;
+}
+
+.R {
+    width: 20%;
+}
+
+.R:focus {
+    outline: none;
+}
+
+fieldset {
+    background: rgb(144, 173, 182);
+    border: none;
+}
+
+legend {
+    text-align: center;
+    font-size: 23px;
+    color: rgb(48, 59, 64);
+}
+
+.submit_btn {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 12px;
+    margin: 6px;
+    border: none;
+    background-color: rgb(144, 173, 182);
+    font-size: 16px;
+    font-family: Verdana;
+    font-weight: bold;
+    color: rgb(48, 59, 64);
+}
+
+.submit_btn:hover {
+    background-color: rgb(93, 134, 146);
+}
+
+datalist {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(48, 59, 64);
+}
